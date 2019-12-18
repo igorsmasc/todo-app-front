@@ -20,6 +20,7 @@ export default class Todo extends React.Component {
     this.handleRemove = this.handleRemove.bind(this);
     this.handleMarkAsDone = this.handleMarkAsDone.bind(this);
     this.handleMarkAsPending = this.handleMarkAsPending.bind(this);
+
     this.handleSearch = this.handleSearch.bind(this);
     this.handleClear = this.handleClear.bind(this);
     this.refresh();
@@ -67,6 +68,18 @@ export default class Todo extends React.Component {
 
   handleClear() {
     this.refresh();
+  }
+
+  handleMarkAsDone(todo) {
+    axios
+      .put(`${URL}/${todo._id}`, { ...todo, done: true })
+      .then(resp => this.refresh());
+  }
+
+  handleMarkAsPending(todo) {
+    axios
+      .put(`${URL}/${todo._id}`, { ...todo, done: false })
+      .then(resp => this.refresh());
   }
 
   render() {
